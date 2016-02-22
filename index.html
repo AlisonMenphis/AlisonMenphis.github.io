@@ -3,29 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <title>Título de la página</title>
-    <link> href='estilos.css'
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+    <link href="main.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <p>Menú</p>
-    <ul>
-        <li><a href="#habilidades">Habilidades y conocimientos</a></li>
-        <li><a href="#perfiles-sociales">Perfiles sociales</a></li>
-
-    <h1>Alicia Mencías Martinez</h1>
-    <h5>Titulación: Ingeniera Técnica Forestal</h5>
-    <img alt="Foto de Alicia" src="C:\Student\MODULO4\HTML5\AlisonMenphis.github.io\resources\images\Foto-Alicia-Mencias-Martinez.jpg">
+<div>
+    <p>
+    Menú principal
+    </p>
+    <ul class="list-inline">
+        <li><a href="#conocimientos">Habilidades y Conocimientos</a></li>
+        <li><a href="#experiencia">Experiencia</a></li>
+        <li><a href="#perfiles">Perfiles Sociales</a></li>
+    </ul>
+<!---
+Para mejorar la visibilidad en el movil usaremos lo siguiente, se pondran en horizontal las pestañas
+    <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-2 centrado"><a href="#conocimientos">Habilidades y Conocimientos</a></div>
+        <div class="col-sm-2 centrado"><a href="#experiencia">Experiencia</a></div>
+        <div class="col-sm-2 centrado"><a href="#perfiles">Perfiles Sociales</a></div>
+        <div class="col-sm-1 centrado"></div>
+     </div> 
+         --->
+    <h2>Alicia Mencías Martinez</h2>
+    <h3>Titulación: Ingeniera Técnica Forestal
+   <br> Ultimo trabajo: Técnico de diagnostico en caida de arbolado urbano.<a target="_blank" href="http://www.dasotec.es/dasotec/Quienes_somos.html">DASOTEC</a>
+</h3>
+   
+    <img alt="Foto de Alicia" src="https://media.licdn.com/media/p/5/005/03b/101/25eaca3.jpg">
        
-    <hr>
-    <p id=habilidades>Habilidades y Conocimiento</p>
+    <hr>  
+    
+    <h2 id="conocimientos">Habilidades y Conocimientos</h2>
     <ul>
         <li>Ofimáticos: Paquete Office</li>
         <li>Cartografía: AutoCAD, ArcGIS</li>
-    </ul>
-        <hr>
-    <p id="perfiles-sociales">Perfiles Sociales</p>
+        </ul>
+    <hr>
+    <h2 id="experiencia">Experiencia</h2>
+    <h1 class="recommended-section-title">DASOTEC</h1>
+    <p class="recommended-section-value-statement">Durante mi trabajo en DASOTEC, he realizado estudios de riesgo de caída de arbolado urbano con ayuda de tomogramas sónicos y eléctricos (PiCUS y  TreeTronic), realizado inventario de arbolado y mobiliario, participado en el desarrollo del proyecto de "Acondicionamiento y adecuación paisajística de la vía pecuaria Colada de las Huelgas del Rio Guadalix" al igual que en el proyecto de " Adecuación del Descansadero y Abrevadero del Ardal" realizando cálculos de movimiento de volumen de tierras con ayuda del MDT v4.0 y un anteproyecto de construccion de un vial en la Callosa de Ensarria, Alicante.</p>
+    <a target="_blank" href="http://www.dasotec.es/dasotec/Quienes_somos.html"><button class="recommended-section-add">Enlace a la empresa</button></a>
+
+    <h1 class="recommended-section-title">WORKOUT</h1>
+    <p class="recommended-section-value-statement">Durante mi trabajo en Workout se ha divido en dos partes.
+    <li>2013-2014 : Coordinadora de personal del Dpto. Imagen</li>
+    <li>2005-2013 : Realizando trabajos de promotora, azafata y coordinacion de personal para eventos infantiles. En empresas como:</li>
+   
+    <table class = "table" >
+            <tr>
+                <td><strong>Empresa</strong></td>
+                <td><strong>Trabajo desempeñado</strong></td>
+            </tr>
+            <tr>
+                <td>Google</td>
+                <td>Obtencion de clientes para THINK2013 y THINK2014</td>
+            </tr>
+            <tr>
+                <td>Faunia</td>
+                <td>Organizacion y supervision de cumpleaños</td>
+            </tr>
+            <tr>
+                <td>National Geographic</td>
+                <td>Coordinadora de personal para Talleres de ciencias para pequeños exploradores</td>
+            </tr>
+             <tr>
+                <td>Skechers</td>
+                <td>Comercial de la gama GOrun en el Open de tenis y concentraciones de maratones.</td>
+            </tr>
+            <tr>
+                <td>XBOX360- Kinect</td>
+                <td>Azafata de los nuevos lanzamientos de KINECT</td>
+            </tr>
+    </table>
+    
+    
+    </p>
+    <a target="_blank" href="http://www.workout-events.com/"><button class="recommended-section-add">Enlace a la empresa</button></a>
+
+
+     <hr>
+    <h2 id="perfiles">Perfiles Sociales</h2>
     <ul>
         <li><a target="_blank" href="https://es.linkedin.com/in/aliciamenciasmartinez">LinkedIn</a></li>
         <li><a target="_blank" href="https://www.facebook.com/alicia.m.martinez.792">Facebook</a></li>
+       </ul> 
+    <hr>
 
+    </hr>
 </body>
 </html>
