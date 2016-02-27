@@ -1,96 +1,197 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Título de la página</title>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
-    <link href="main.css" rel="stylesheet" type="text/css">
-</head>
-<body>
-<div>
-    <p>
-    Menú principal
-    </p>
-    <ul class="list-inline">
-        <li><a href="#conocimientos">Habilidades y Conocimientos</a></li>
-        <li><a href="#experiencia">Experiencia</a></li>
-        <li><a href="#perfiles">Perfiles Sociales</a></li>
-    </ul>
-<!---
-Para mejorar la visibilidad en el movil usaremos lo siguiente, se pondran en horizontal las pestañas
-    <div class="row">
-        <div class="col-sm-1"></div>
-        <div class="col-sm-2 centrado"><a href="#conocimientos">Habilidades y Conocimientos</a></div>
-        <div class="col-sm-2 centrado"><a href="#experiencia">Experiencia</a></div>
-        <div class="col-sm-2 centrado"><a href="#perfiles">Perfiles Sociales</a></div>
-        <div class="col-sm-1 centrado"></div>
-     </div> 
-         --->
-    <h2>Alicia Mencías Martinez</h2>
-    <h3>Titulación: Ingeniera Técnica Forestal
-   <br> Ultimo trabajo: Técnico de diagnostico en caida de arbolado urbano.<a target="_blank" href="http://www.dasotec.es/dasotec/Quienes_somos.html">DASOTEC</a>
-</h3>
-   
-    <img alt="Foto de Alicia" src="https://media.licdn.com/media/p/5/005/03b/101/25eaca3.jpg">
-       
-    <hr>  
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no"/>
+    <!--Este es el nombre que aparecerá en la pestana del Chrome-->
+    <title>ANTIPODAS</title>
+    <link rel="stylesheet" href="https://js.arcgis.com/3.15/esri/css/esri.css">
+    <link href='https://fonts.googleapis.com/css?family=Mystery+Quest' rel='stylesheet' type='text/css'>
+   <script src="https://js.arcgis.com/3.15/"></script>
+    <style>
+
+      h1{
+        text-align: center;
+        font-family: 'Mystery Quest', cursive;
+        font-weight: 1000;
+        background-image: url("http://academiamega.es/formacion/wp-content/uploads/2014/08/mapamundi-antiguo-pan.jpg");
+        opacity: 0.75;
+            
+}
+      hr {
+        border: 0;
+        height: 2px;
+        background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+        }
+      #crosshairs_2{
+        top: 361px; left: 747px;
+      }
+
+      #crosshairs{
+        top: 361px; left: 220px
+      }
+      html, body,  {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      #mapDiv {
+        height: 100%;
+        float: left;
+        margin-right: 10em;
+        margin-left: 10em;
+        margin-top: 1em;
+        display:block;
+        border: #040200 5px solid; 
+        margin-bottom:10px;
+
+//Con lo siguiente ponemos sombra a la caja-->
+        -webkit-box-shadow: 14px 25px 30px 5px rgba(0,0,0,0.75);
+        -moz-box-shadow: 14px 25px 30px 5px rgba(0,0,0,0.75);
+        box-shadow: 14px 25px 30px 5px rgba(0,0,0,0.75);
+
+//Con esto redondeamos los bordes
+        -moz-border-radius-topleft: 5px;
+        -webkit-border-top-left-radius: 5px;
+         border-top-left-radius: 5px;
+        -moz-border-radius-topright: 5px;
+        -webkit-border-top-right-radius: 5px;
+        border-top-right-radius: 5px;
+        -moz-border-radius-bottomright: 5px;
+        -webkit-border-bottom-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        -moz-border-radius-bottomleft: 5px;
+        -webkit-border-bottom-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+
+    }
+
+
+
     
-    <h2 id="conocimientos">Habilidades y Conocimientos</h2>
-    <ul>
-        <li>Ofimáticos: Paquete Office</li>
-        <li>Cartografía: AutoCAD, ArcGIS</li>
-        </ul>
+      #mapDiv2 {
+        height: 100%;
+        float: right;
+       margin-right: 10em;
+       margin-top: 1em;
+       display:block;
+       border: #040200 5px solid; 
+       margin-bottom:10px;
+
+
+    //Con lo siguiente ponemos sombra a la caja
+        -webkit-box-shadow: 14px 25px 30px 5px rgba(0,0,0,0.75);
+        -moz-box-shadow: 14px 25px 30px 5px rgba(0,0,0,0.75);
+        box-shadow: 14px 25px 30px 5px rgba(0,0,0,0.75);
+
+//Con esto redondeamos los bordes
+        -moz-border-radius-topleft: 5px;
+        -webkit-border-top-left-radius: 5px;
+         border-top-left-radius: 5px;
+        -moz-border-radius-topright: 5px;
+        -webkit-border-top-right-radius: 5px;
+        border-top-right-radius: 5px;
+        -moz-border-radius-bottomright: 5px;
+        -webkit-border-bottom-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        -moz-border-radius-bottomleft: 5px;
+        -webkit-border-bottom-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }
+
+    </style>
+ 
+    <script>
+
+  
+
+      require([
+        "esri/map", 
+        "dojo/domReady!", 
+        "esri/geometry/Extent", 
+        "esri/geometry/webMercatorUtils"
+        ], 
+        function(Map, Extent
+          , webMercatorUtils
+          ) {
+
+        var map;
+          map = new Map("mapDiv", {
+          basemap: "topo",  //For full list of pre-defined basemaps, navigate to http://arcg.is/1JVo6Wd
+          center: [-122.45, 37.75], // longitude, latitude
+          zoom: 13
+          });
+
+        var map2;
+          map2 = new Map("mapDiv2", {
+          basemap: "topo",  //For full list of pre-defined basemaps, navigate to http://arcg.is/1JVo6Wd
+          center: [-122.45, 37.75], // longitude, latitude
+          zoom: 13
+          });
+
+
+      map.on("extent-change", function(change){
+        //alert("se esta moviendo");
+        var center = change.extent.getCenter();
+        map2.centerAt(center);
+      });
+       map2.on("extent-change", function(change){
+        //alert("se esta moviendo");
+        var center = change.extent.getCenter();
+        map.centerAt(center);
+      });
+       map.on("zoom-end", function(end){
+        var ali = end.extent.centerAndZoom();
+        map2.centerAndZoom(ali);
+       });
+
+
+//var query.geometry = webMercatorUtils.webMercatorToGeographic(geometries[0]);
+
+
+
+
+});
+
+
+
+
+
+    </script>
+  </head>
+
+  <body>
+    <h1>Antipodas</h1>
     <hr>
-    <h2 id="experiencia">Experiencia</h2>
-    <h1 class="recommended-section-title">DASOTEC</h1>
-    <p class="recommended-section-value-statement">Durante mi trabajo en DASOTEC, he realizado estudios de riesgo de caída de arbolado urbano con ayuda de tomogramas sónicos y eléctricos (PiCUS y  TreeTronic), realizado inventario de arbolado y mobiliario, participado en el desarrollo del proyecto de "Acondicionamiento y adecuación paisajística de la vía pecuaria Colada de las Huelgas del Rio Guadalix" al igual que en el proyecto de " Adecuación del Descansadero y Abrevadero del Ardal" realizando cálculos de movimiento de volumen de tierras con ayuda del MDT v4.0 y un anteproyecto de construccion de un vial en la Callosa de Ensarria, Alicante.</p>
-    <a target="_blank" href="http://www.dasotec.es/dasotec/Quienes_somos.html"><button class="recommended-section-add">Enlace a la empresa</button></a>
+    <h3> ¿ Que son las antípodas?</h3>
+    <h5> En Geografía, el antípoda es el lugar de la superficie terrestre diametralmente opuesto a otro lado de una posición en particular; es decir, el lugar de la superficie terrestre más alejado.</h5>
+   <!-- <img alt="Globo terraqueo con antipodas" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Antipodas.jpg/500px-Antipodas.jpg">-->
 
-    <h1 class="recommended-section-title">WORKOUT</h1>
-    <p class="recommended-section-value-statement">Durante mi trabajo en Workout se ha divido en dos partes.
-    <li>2013-2014 : Coordinadora de personal del Dpto. Imagen</li>
-    <li>2005-2013 : Realizando trabajos de promotora, azafata y coordinacion de personal para eventos infantiles. En empresas como:</li>
-   
-    <table class = "table" >
-            <tr>
-                <td><strong>Empresa</strong></td>
-                <td><strong>Trabajo desempeñado</strong></td>
-            </tr>
-            <tr>
-                <td>Google</td>
-                <td>Obtencion de clientes para THINK2013 y THINK2014</td>
-            </tr>
-            <tr>
-                <td>Faunia</td>
-                <td>Organizacion y supervision de cumpleaños</td>
-            </tr>
-            <tr>
-                <td>National Geographic</td>
-                <td>Coordinadora de personal para Talleres de ciencias para pequeños exploradores</td>
-            </tr>
-             <tr>
-                <td>Skechers</td>
-                <td>Comercial de la gama GOrun en el Open de tenis y concentraciones de maratones.</td>
-            </tr>
-            <tr>
-                <td>XBOX360- Kinect</td>
-                <td>Azafata de los nuevos lanzamientos de KINECT</td>
-            </tr>
-    </table>
+
+    <a target="_blank" href="https://es.wikipedia.org/wiki/Ant%C3%ADpodas"><button class="recommended-section-add">Quieres saber más?!</button></a>
+<br>
+
     
-    
-    </p>
-    <a target="_blank" href="http://www.workout-events.com/"><button class="recommended-section-add">Enlace a la empresa</button></a>
+    <div id="mapDiv"></div>
+    <div id="mapDiv2"></div>
+    <br>
 
+    <!--box de coordenadas-->
+    <div class="info_block">
+                <form name="load_location" class="forms" onsubmit="dispatch_form(); return false;">
+                    <h4>Ingresar Coordenadas</h4>
+                    <div class="row"><span id="load_lat_span"><span class="label">Latitud:</span><span class="value"><input class="text" type="text" onfocus="set_focus(this, true)" onblur="set_focus(this, false)" name="lat" maxlength="50"></span></span></div>
+                    <div class="row"><span id="load_lon_span"><span class="label">Longitud:</span><span class="value"><input class="text" type="text" onfocus="set_focus(this, true)" onblur="set_focus(this, false)" name="lon" maxlength="50"></span></span></div>
+                    <div class="row"><span id="load_lon_span2"><span class="label"></span><span class="value"><input name="yo" onclick="dispatch_form();" type="button" value="Enviar coordenadas"></span></span></div>
+                
+                    <div class="row"><span id="load_rep"></span></div>
+                    <input type="hidden" name="sescod" value="">
+                    <input type="hidden" name="zoom_values" id="zoom_values" value=""></input>
+              </form>
+                <br>
+              <div class="row"><span id="address">Zoom Independientes:<label title="Permitir Zoom independientes"><input type="checkbox" name="decouple_zoom" value="1" onclick="toggle_dz(this)" title="Decouple maps' zooming."></label></span></div>
+          </div>
 
-     <hr>
-    <h2 id="perfiles">Perfiles Sociales</h2>
-    <ul>
-        <li><a target="_blank" href="https://es.linkedin.com/in/aliciamenciasmartinez">LinkedIn</a></li>
-        <li><a target="_blank" href="https://www.facebook.com/alicia.m.martinez.792">Facebook</a></li>
-       </ul> 
-    <hr>
-
-    </hr>
-</body>
+  </body>
 </html>
