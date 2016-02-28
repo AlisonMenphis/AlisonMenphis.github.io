@@ -105,7 +105,7 @@
     <script>
 
   
-
+//Aqui creamos los dos mapas, que en el body y con estilo los pondremos flotantes y en dos div distintos
       require([
         "esri/map", 
         "dojo/domReady!", 
@@ -131,6 +131,8 @@
           });
 
 
+
+//Lo siguiente lo que hace es que si haces zoom o pan en cualquiera de los mapas se mueva el otro;
       map.on("extent-change", function(change){
         //alert("se esta moviendo");
         var center = change.extent.getCenter();
@@ -141,9 +143,13 @@
         var center = change.extent.getCenter();
         map.centerAt(center);
       });
-       map.on("zoom-end", function(end){
-        var ali = end.extent.centerAndZoom();
-        map2.centerAndZoom(ali);
+       map.on("zoom-end", function(change){
+        var zoom = change.level;
+        map2.setZoom(zoom);
+       });
+      map2.on("zoom-end", function(change){
+        var zoom = change.level;
+        map.setZoom(zoom);
        });
 
 
@@ -162,7 +168,7 @@
   </head>
 
   <body>
-    <h1>Antipodas</h1>
+    <h1>Antípodas</h1>
     <hr>
     <h3> ¿ Que son las antípodas?</h3>
     <h5> En Geografía, el antípoda es el lugar de la superficie terrestre diametralmente opuesto a otro lado de una posición en particular; es decir, el lugar de la superficie terrestre más alejado.</h5>
