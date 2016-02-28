@@ -10,26 +10,30 @@
    <script src="https://js.arcgis.com/3.15/"></script>
     <style>
 
-      h1{
+      h1 {
         text-align: center;
         font-family: 'Mystery Quest', cursive;
         font-weight: 1000;
         background-image: url("http://academiamega.es/formacion/wp-content/uploads/2014/08/mapamundi-antiguo-pan.jpg");
-        opacity: 0.75;
-            
-}
+        background-image:opacity: 0.75;
+      }
+      
+      body {
+        background-image: url("http://academiamega.es/formacion/wp-content/uploads/2014/08/mapamundi-antiguo-pan.jpg");
+        background: transparent/100;
+       }
+
+
       hr {
         border: 0;
         height: 2px;
         background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
-        }
-      #crosshairs_2{
-        top: 361px; left: 747px;
       }
 
-      #crosshairs{
-        top: 361px; left: 220px
-      }
+      #crosshairs_2{top: 361px; left: 747px}
+
+      #crosshairs{top: 361px; left: 220px}
+      
       html, body,  {
         height: 100%;
         margin: 0;
@@ -46,12 +50,12 @@
         border: #040200 5px solid; 
         margin-bottom:10px;
 
-//Con lo siguiente ponemos sombra a la caja-->
+/*Con lo siguiente ponemos sombra a la caja*/
         -webkit-box-shadow: 14px 25px 30px 5px rgba(0,0,0,0.75);
         -moz-box-shadow: 14px 25px 30px 5px rgba(0,0,0,0.75);
         box-shadow: 14px 25px 30px 5px rgba(0,0,0,0.75);
 
-//Con esto redondeamos los bordes
+/*Con esto redondeamos los bordes*/
         -moz-border-radius-topleft: 5px;
         -webkit-border-top-left-radius: 5px;
          border-top-left-radius: 5px;
@@ -64,10 +68,7 @@
         -moz-border-radius-bottomleft: 5px;
         -webkit-border-bottom-left-radius: 5px;
         border-bottom-left-radius: 5px;
-
     }
-
-
 
     
       #mapDiv2 {
@@ -78,14 +79,11 @@
        display:block;
        border: #040200 5px solid; 
        margin-bottom:10px;
-
-
-    //Con lo siguiente ponemos sombra a la caja
+/*Con lo siguiente ponemos sombra a la caja*/
         -webkit-box-shadow: 14px 25px 30px 5px rgba(0,0,0,0.75);
         -moz-box-shadow: 14px 25px 30px 5px rgba(0,0,0,0.75);
         box-shadow: 14px 25px 30px 5px rgba(0,0,0,0.75);
-
-//Con esto redondeamos los bordes
+/*Con esto redondeamos los bordes*/
         -moz-border-radius-topleft: 5px;
         -webkit-border-top-left-radius: 5px;
          border-top-left-radius: 5px;
@@ -98,8 +96,28 @@
         -moz-border-radius-bottomleft: 5px;
         -webkit-border-bottom-left-radius: 5px;
         border-bottom-left-radius: 5px;
-    }
+      }
 
+
+      button{
+      color: rgb(225, 230, 230);
+      font-size: 15px;
+      padding: 20px;
+      text-shadow: 0px 2px 0px rgba(30, 30, 30, 0.76);
+      -webkit-border-radius: 30px;
+      -moz-border-radius: 30px;
+      border-radius: 30px;
+      background: rgb(227, 136, 16);
+      background: -moz-linear-gradient(270deg, rgb(227, 136, 16) 41%, rgb(255, 165, 0) 70%);
+      background: -webkit-linear-gradient(270deg, rgb(227, 136, 16) 41%, rgb(255, 165, 0) 70%);
+      background: -o-linear-gradient(270deg, rgb(227, 136, 16) 41%, rgb(255, 165, 0) 70%);
+      background: -ms-linear-gradient(270deg, rgb(227, 136, 16) 41%, rgb(255, 165, 0) 70%);
+      background: linear-gradient(180deg, rgb(227, 136, 16) 41%, rgb(255, 165, 0) 70%);
+      -webkit-box-shadow: 9px 9px 8px rgba(50, 50, 50, 0.81);
+      -moz-box-shadow:    9px 9px 8px rgba(50, 50, 50, 0.81);
+      box-shadow:         9px 9px 8px rgba(50, 50, 50, 0.81);
+      }
+    
     </style>
  
     <script>
@@ -112,9 +130,7 @@
         "esri/geometry/Extent", 
         "esri/geometry/webMercatorUtils"
         ], 
-        function(Map, Extent
-          , webMercatorUtils
-          ) {
+        function(Map, Extent, webMercatorUtils) {
 
         var map;
           map = new Map("mapDiv", {
@@ -132,6 +148,8 @@
 
 
 
+//var query.geometry = webMercatorUtils.webMercatorToGeographic(geometries[0]);
+
 //Lo siguiente lo que hace es que si haces zoom o pan en cualquiera de los mapas se mueva el otro;
       map.on("extent-change", function(change){
         //alert("se esta moviendo");
@@ -143,6 +161,8 @@
         var center = change.extent.getCenter();
         map.centerAt(center);
       });
+
+
        map.on("zoom-end", function(change){
         var zoom = change.level;
         map2.setZoom(zoom);
@@ -176,9 +196,11 @@
 
 
     <a target="_blank" href="https://es.wikipedia.org/wiki/Ant%C3%ADpodas"><button class="recommended-section-add">Quieres saber más?!</button></a>
+
 <br>
 
-    
+
+
     <div id="mapDiv"></div>
     <div id="mapDiv2"></div>
     <br>
