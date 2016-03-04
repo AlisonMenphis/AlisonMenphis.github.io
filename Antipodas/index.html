@@ -13,9 +13,12 @@
       h1 {
         text-align: center;
         font-family: 'Mystery Quest', cursive;
-        font-weight: 1000;
-        background-image: url("http://academiamega.es/formacion/wp-content/uploads/2014/08/mapamundi-antiguo-pan.jpg");
-        background-image:opacity: 0.75;
+        font-weight: 600;
+        font-size: 3em;
+
+        /*background: opacity: 0.2;*/
+        /*background-image: url("http://academiamega.es/formacion/wp-content/uploads/2014/08/mapamundi-antiguo-pan.jpg");
+        background-image:opacity: 0.75;*/
       }
       
       body {
@@ -49,12 +52,10 @@
         display:block;
         border: #040200 5px solid; 
         margin-bottom:10px;
-
 /*Con lo siguiente ponemos sombra a la caja*/
         -webkit-box-shadow: 14px 25px 30px 5px rgba(0,0,0,0.75);
         -moz-box-shadow: 14px 25px 30px 5px rgba(0,0,0,0.75);
         box-shadow: 14px 25px 30px 5px rgba(0,0,0,0.75);
-
 /*Con esto redondeamos los bordes*/
         -moz-border-radius-topleft: 5px;
         -webkit-border-top-left-radius: 5px;
@@ -100,22 +101,22 @@
 
 
       button{
-      color: rgb(225, 230, 230);
-      font-size: 15px;
-      padding: 20px;
-      text-shadow: 0px 2px 0px rgba(30, 30, 30, 0.76);
-      -webkit-border-radius: 30px;
-      -moz-border-radius: 30px;
-      border-radius: 30px;
+      color: rgb(0, 0, 0);
+      font-size: 20px;
+      padding: 15px;
+      text-shadow: 0px -2px 0px rgba(2, 2, 2, 0);
+      -webkit-border-radius: 15px;
+      -moz-border-radius: 15px;
+      border-radius: 15px;
       background: rgb(227, 136, 16);
       background: -moz-linear-gradient(270deg, rgb(227, 136, 16) 41%, rgb(255, 165, 0) 70%);
       background: -webkit-linear-gradient(270deg, rgb(227, 136, 16) 41%, rgb(255, 165, 0) 70%);
       background: -o-linear-gradient(270deg, rgb(227, 136, 16) 41%, rgb(255, 165, 0) 70%);
       background: -ms-linear-gradient(270deg, rgb(227, 136, 16) 41%, rgb(255, 165, 0) 70%);
       background: linear-gradient(180deg, rgb(227, 136, 16) 41%, rgb(255, 165, 0) 70%);
-      -webkit-box-shadow: 9px 9px 8px rgba(50, 50, 50, 0.81);
-      -moz-box-shadow:    9px 9px 8px rgba(50, 50, 50, 0.81);
-      box-shadow:         9px 9px 8px rgba(50, 50, 50, 0.81);
+      -webkit-box-shadow: 11px 6px 8px rgba(50, 50, 50, 0.81);
+      -moz-box-shadow:    11px 6px 8px rgba(50, 50, 50, 0.81);
+      box-shadow:         11px 6px 8px rgba(50, 50, 50, 0.81);
       }
     
     </style>
@@ -126,59 +127,191 @@
 //Aqui creamos los dos mapas, que en el body y con estilo los pondremos flotantes y en dos div distintos
       require([
         "esri/map", 
-        "dojo/domReady!", 
+        "esri/geometry/Point",
+        "esri/geometry/webMercatorUtils",
         "esri/geometry/Extent", 
-        "esri/geometry/webMercatorUtils"
+        "esri/geometry/Geometry",
+        "dojo/domReady!"  
         ], 
-        function(Map, Extent, webMercatorUtils) {
+
+        function(Map, Point, webMercatorUtils, Extent) {
 
         var map;
           map = new Map("mapDiv", {
           basemap: "topo",  //For full list of pre-defined basemaps, navigate to http://arcg.is/1JVo6Wd
-          center: [-122.45, 37.75], // longitude, latitude
-          zoom: 13
+          center: [-3.70, 41.40], // longitude, latitude
+          zoom: 6
           });
 
         var map2;
           map2 = new Map("mapDiv2", {
           basemap: "topo",  //For full list of pre-defined basemaps, navigate to http://arcg.is/1JVo6Wd
-          center: [-122.45, 37.75], // longitude, latitude
-          zoom: 13
+         /* center: [-122.45, 37.75], // longitude, latitude*/
+          zoom: 6
           });
 
 
 
-//var query.geometry = webMercatorUtils.webMercatorToGeographic(geometries[0]);
-
 //Lo siguiente lo que hace es que si haces zoom o pan en cualquiera de los mapas se mueva el otro;
+     /* map.on("extent-change", function(change){
+        var center = change.extent.getCenter();
+       map2.centerAt(center);
+      });*/
+      /* map2.on("extent-change", function(change){
+        var center = change.extent.getCenter();
+       map.centerAt(center);
+      });*/
+
+       
+
+//Lo siguiente es la funcion de antipodas.
       map.on("extent-change", function(change){
-        //alert("se esta moviendo");
-        var center = change.extent.getCenter();
-        map2.centerAt(center);
-      });
-       map2.on("extent-change", function(change){
-        //alert("se esta moviendo");
-        var center = change.extent.getCenter();
-        map.centerAt(center);
-      });
+        /*obtenemos el punto central del mapa 1*/
+        var ptocentral = change.extent.getCenter();
+        /*Convertimos de web Mercator a geograficas*/
+        var WmtoGeo = webMercatorUtils.xyToLngLat(ptocentral.x,ptocentral.y);
+        /*Extraemos la latitud y longitud*/
+        var Lng = WmtoGeo[0];
+        var Lat = WmtoGeo[1];
+               
+        /*Calculamos el punto antipoda*/
+        var antiLat = - Lat;
+        
+        if (Lng < 0){ var antiLog = Lng + 180;
+          /*var centeranti = new Point(antiLog, antiLat);*/
+        }
+        else { var antiLog = Lng - 180;
+          /*var centeranti = new Point(antiLog, antiLat)*/
+        };
+
+        /*Creamos un punto con las coordenadas de la antipoda*/  
+        var nuevascoord = new Point(antiLog, antiLat); /*Longitud, latitud*/
+        map2.centerAt(nuevascoord);
+        });
+        
 
 
-       map.on("zoom-end", function(change){
+      map2.on("extent-change", function(change){
+        /*obtenemos el punto central del mapa 1*/
+        var ptocentral2 = change.extent.getCenter();
+        /*Convertimos de web Mercator a geograficas*/
+        var WmtoGeo2 = webMercatorUtils.xyToLngLat(ptocentral2.x,ptocentral2.y);
+        /*Extraemos la latitud y longitud*/
+        var Lng2 = WmtoGeo2[0];
+        var Lat2 = WmtoGeo2[1];
+               
+        /*Calculamos el punto antipoda*/
+        var antiLat2 = - Lat2;
+        
+        if (Lng2 < 0){ var antiLog2 = Lng2 + 180;
+          /*var centeranti = new Point(antiLog, antiLat);*/
+        }
+        else { var antiLog2 = Lng2 - 180;
+          /*var centeranti = new Point(antiLog, antiLat)*/
+        };
+
+        /*Creamos un punto con las coordenadas de la antipoda*/  
+        var nuevascoord2 = new Point(antiLog2, antiLat2); /*Longitud, latitud*/
+        map.centerAt(nuevascoord2);
+        });
+
+
+
+
+
+
+        map.on("zoom-end", function(change){
         var zoom = change.level;
         map2.setZoom(zoom);
        });
-      map2.on("zoom-end", function(change){
+       map2.on("zoom-end", function(change){
         var zoom = change.level;
         map.setZoom(zoom);
        });
 
-
-//var query.geometry = webMercatorUtils.webMercatorToGeographic(geometries[0]);
-
-
-
-
 });
+
+
+/*A partir de aqui el codigo del buscador
+<script>
+      require([
+        "esri/map",
+        "esri/dijit/Geocoder",
+        "esri/graphic",
+        "esri/symbols/SimpleMarkerSymbol",
+        "esri/geometry/screenUtils",
+        "dojo/dom",
+        "dojo/dom-construct",
+        "dojo/query",
+        "dojo/_base/Color",
+        "dojo/domReady!"
+      ], function(Map, Geocoder, Graphic, SimpleMarkerSymbol, screenUtils, dom, domConstruct, query, Color) {
+        // create a map and instance of the geocoder widget here
+        var map = new Map("map", {
+          basemap: "topo", 
+          center: [ -100, 40 ], 
+          zoom: 10
+        });
+        var geocoder =  new Geocoder({
+          arcgisGeocoder: {
+            placeholder: "Find a place"
+          }, 
+          autoComplete: true,
+          map: map
+        }, dom.byId("search"));
+
+        map.on("load", enableSpotlight);
+
+        geocoder.on("select", showLocation);
+        geocoder.on("clear", removeSpotlight);
+
+        function showLocation(evt) {
+          map.graphics.clear();
+          var point = evt.result.feature.geometry;
+          var symbol = new SimpleMarkerSymbol().setStyle(
+            SimpleMarkerSymbol.STYLE_SQUARE).setColor(
+            new Color([255,0,0,0.5])
+          );
+          var graphic = new Graphic(point, symbol);
+          map.graphics.add(graphic);
+
+          map.infoWindow.setTitle("Search Result");
+          map.infoWindow.setContent(evt.result.name);
+          map.infoWindow.show(evt.result.feature.geometry);
+
+          var spotlight = map.on("extent-change", function(extentChange) {
+            var geom = screenUtils.toScreenGeometry(map.extent, map.width, map.height, extentChange.extent);
+            var width = geom.xmax - geom.xmin;
+            var height = geom.ymin - geom.ymax;
+
+            var max = height;
+            if ( width > height ) {
+                max = width;
+            }
+
+            var margin = '-' + Math.floor(max/2) + 'px 0 0 -' + Math.floor(max/2) + 'px';
+
+            query(".spotlight").addClass("spotlight-active").style({
+              width: max + "px",
+              height: max + "px",
+              margin: margin
+            });
+            spotlight.remove();
+          });
+        }
+
+        function enableSpotlight() {
+          var html = "<div id='spotlight' class='spotlight'></div>"
+          domConstruct.place(html, dom.byId("map_container"), "first");
+        }
+
+        function removeSpotlight() {
+          query(".spotlight").removeClass("spotlight-active");
+          map.infoWindow.hide();
+          map.graphics.clear();
+        }
+      });
+    <script>*/
 
 
 
@@ -197,15 +330,15 @@
 
     <a target="_blank" href="https://es.wikipedia.org/wiki/Ant%C3%ADpodas"><button class="recommended-section-add">Quieres saber más?!</button></a>
 
-<br>
-
-
-
-    <div id="mapDiv"></div>
-    <div id="mapDiv2"></div>
     <br>
 
-    <!--box de coordenadas-->
+
+    <div id = "background"></div>
+    <div id = "mapDiv"></div>
+    <div id = "mapDiv2"></div>
+    <br>
+
+    <!--box de coordenadas
     <div class="info_block">
                 <form name="load_location" class="forms" onsubmit="dispatch_form(); return false;">
                     <h4>Ingresar Coordenadas</h4>
@@ -219,7 +352,11 @@
               </form>
                 <br>
               <div class="row"><span id="address">Zoom Independientes:<label title="Permitir Zoom independientes"><input type="checkbox" name="decouple_zoom" value="1" onclick="toggle_dz(this)" title="Decouple maps' zooming."></label></span></div>
-          </div>
+          </div>-->
+
+
+
+
 
   </body>
 </html>
